@@ -1,0 +1,7 @@
+1. sjekke om input dir er dir
+2. gå gjennom input dir og sjekke om den har subdir, telle antall dir og skrive det ut
+3. sjekke om sbudir har enten requirements.txt eller package.json
+3a. ignorer alle andre filer enn disse to
+4. hente og skrive ut innhold til disse filene
+5. lagre navn, versjon, type(npm eller pip) og full path
+
