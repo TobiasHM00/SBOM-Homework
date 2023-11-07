@@ -1,0 +1,24 @@
+[
+    {
+        "name": "intern-angular",
+        "version": "1.0.0",
+        "description": "",
+        "type": "npm",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package-lock.json"
+    },
+    {
+        "name": "mender-gui",
+        "version": "1.0.0",
+        "description": "Graphical user interface for Mender.",
+        "type": "npm: >=8",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package.json",
+        "license": "Apache-2.0"
+    },
+    {
+        "name": "apache-libcloud",
+        "version": "3.3.1",
+        "description": "",
+        "type": "pip",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-req\\requirements.txt"
+    }
+]
