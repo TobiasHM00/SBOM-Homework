@@ -4,8 +4,16 @@ import os
 from pathlib import Path
 import sys
 
+def extract_info(repo_dir: Path) -> None | dict:
+    """Finding the correct files to read from and creating dicts for the information
+        If no valid file is found, returning None
 
-def extract_info(repo_dir):
+    Args:
+        repo_dir (Path): Path to the source code repositories
+
+    Returns:
+        None | dict: If
+    """
     if os.path.exists(os.path.join(repo_dir, 'requirements.txt')):
         with open(os.path.join(repo_dir, 'requirements.txt'), 'r') as txtfile:
             content = txtfile.read()
@@ -28,8 +36,51 @@ def extract_info(repo_dir):
         return None
 
 
-def create_sbom(arguments: list):
-    #TODO description of function
+def save_as_CSV(sbom_data: list, parent_dir: Path) -> None:
+    """Creating and writeing the information from sbom_data to a CSV-file and saves it to the parent_dir
+
+    Args:
+        sbom_data (list): list of dicts to read from
+        parent_dir (Path): Path to directory for saveing the CSV-file
+    
+    Returns:
+        None
+    """
+    csv_file = os.path.join(parent_dir, 'sbom.csv')
+    with open(csv_file, 'w', newline='') as csvfile:
+        fieldnames = ['name', 'version', 'type', 'path']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for item in sbom_data:
+            writer.writerow(item)
+    print(f"Saved SBOM in CSV format to '{parent_dir}'")
+
+
+def save_as_JSON(sbom_data: dict, parent_dir: Path) -> None:
+    """Creating and writeing the information from sbom_data to a JSON-file and saves it to the parent_dir
+
+    Args:
+        sbom_data (list): list of dicts to read from
+        parent_dir (Path): Path to directory for saveing the JSON-file
+    
+    Returns:
+        None
+    """
+    json_file = os.path.join(parent_dir, 'sbom.json')
+    with open(json_file, 'w') as jsonfile:
+        json.dump(sbom_data, jsonfile, indent=4)
+    print(f"Saved SBOM in JSON format to '{parent_dir}'")
+
+
+def create_sbom(arguments: list) -> None:
+    """_summary_
+
+    Args:
+        arguments (list): arguments from the command line, sys.argv
+
+    Returns:
+        None
+    """
     #Checking for correct amount of arguments, only want 
     if len(arguments) != 2:
         raise ValueError("Wrong amounts of arguments!", arguments)
@@ -50,49 +101,13 @@ def create_sbom(arguments: list):
     sbom_data = []
     for subrepo in repos.iterdir():
         if subrepo.is_dir():
-            found_target_file = False
-            for item in subrepo.iterdir():
-                if item.name in target_filenames:
-                    found_target_file = True
-                    info = extract_info(subrepo)
-                    if info:
-                        sbom_data.append(info)
-                    break
-            if not found_target_file:
+            info = extract_info(subrepo)
+            if info:
+                sbom_data.append(info)
+            else: 
                 raise FileNotFoundError(f"Your repo: '{full_repos_path / subrepo.name}' does not have any of the targeted files: Targeted files '{target_filenames}'.")
 
     save_as_CSV(sbom_data, full_repos_path)
     save_as_JSON(sbom_data, full_repos_path)
 
-
-def save_as_CSV(sbom_data: list, parent_dir: Path):
-    csv_file = os.path.join(parent_dir, 'sbom.csv')
-    with open(csv_file, 'w', newline='') as csvfile:
-        fieldnames = ['name', 'version', 'type', 'path']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for item in sbom_data:
-            writer.writerow(item)
-    
-    print(f"Saved SBOM in CSV format to '{parent_dir}'")
-        
-
-def save_as_JSON(sbom_data: dict, parent_dir: Path):
-    json_file = os.path.join(parent_dir, 'sbom.json')
-    sbom_data = [
-        {
-            "name": item["name"],
-            "version": item["version"],
-            "type": item["type"],
-            "path": item["path"]
-        }
-        for item in sbom_data
-    ]
-    with open(json_file, 'w') as jsonfile:
-        json.dump(sbom_data, jsonfile, indent=4)
-    
-    print(f"Saved SBOM in JSON format to '{parent_dir}'")
-
-
-if __name__ == "__main__":
-    create_sbom(sys.argv)
+create_sbom(sys.argv)
