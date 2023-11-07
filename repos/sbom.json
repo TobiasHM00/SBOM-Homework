@@ -1,0 +1,14 @@
+[
+    {
+        "name": "mender-gui",
+        "version": "1.0.0",
+        "type": "npm",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\repos\\repo-pack\\package.json"
+    },
+    {
+        "name": "repos\\repo-req",
+        "version": "",
+        "type": "pip",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\repos\\repo-req\\requirements.txt"
+    }
+]
