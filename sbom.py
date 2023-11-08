@@ -6,7 +6,7 @@ import sys
 
 def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
     """Finding the correct files to read from and creating dicts for the information
-        If no valid file is found, returning None
+        If no valid file is found return None
 
     Args:
         filename (str | Path): path to the filename of interest
@@ -19,13 +19,14 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
     #Check for requirements.txt for Python projects and extracts the info wanted
     if filename == "requirements.txt":
         with open(os.path.join(repo_dir, filename), "r") as txtfile:
-            content = txtfile.read().split("==")
+            content = txtfile.read().split("\n")
             return {
-                "name": content[0],
-                "version": content[1],
+                "name": str(repo_dir),
+                "version": "",
                 "description": "",
                 "type": "pip",
-                "path": os.path.abspath(os.path.join(repo_dir, filename))
+                "path": os.path.abspath(os.path.join(repo_dir, filename)),
+                "dependencies": list(content)
             }
     #Check for package.json for JavaScript projects and extracts the info wanted
     elif filename == "package.json":
@@ -35,9 +36,12 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
                 "name": content["name"],
                 "version": content["version"],
                 "description": content["description"],
-                "type": "npm: " + content["engines"]["npm"],
+                "type": "npm",
+                "engines": content["engines"],
                 "path": os.path.abspath(os.path.join(repo_dir, filename)),
-                "license": content["license"]
+                "author": content["author"],
+                "license": content["license"],
+                "dependencies": content["dependencies"]
             }
     #Check for package-lock.json for JavaScript projects and extracts the info wanted
     elif filename == "package-lock.json":
@@ -46,9 +50,10 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
             return {
                 "name": content["name"],
                 "version": content["version"],
+                "lockfileVersion": content["lockfileVersion"],
                 "description": "",
                 "type": "npm",
-                "path": os.path.abspath(os.path.join(repo_dir, filename))
+                "path": os.path.abspath(os.path.join(repo_dir, filename)),
             }
     #Returns None if none of the valid files were found
     else:
@@ -68,7 +73,7 @@ def save_as_CSV(sbom_data: list, parent_dir: str | Path) -> None:
     parent_dir = Path(parent_dir)
     csv_file = os.path.join(parent_dir, "sbom.csv")
     with open(csv_file, "w", newline="") as csvfile:
-        fieldnames = ["name", "version", "description", "type", "path", "license"]
+        fieldnames = ["name", "version", "lockfileVersion", "description", "type", "engines", "path", "author", "license", "dependencies"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for item in sbom_data:
@@ -94,7 +99,8 @@ def save_as_JSON(sbom_data: dict, parent_dir: str | Path) -> None:
 
 
 def create_sbom(directory: str | Path) -> None:
-    """Creates the list of sbom_data and then calls the different functions to save as different files
+    """ Calls the extract_info function to get the data wanted form each of the valid files.
+        Saves the data in the list of sbom_data and then calls the different functions to save the extracted data to file.
 
     Args:
         directory (str | Path): path to the passing directory
