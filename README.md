@@ -6,8 +6,8 @@
 <p>
   Once the project is cloned, just write this in the terminal:
   <br>
-  <ul> 
-    <li>python3 sbom.py 'path to directory with software projects'</li>
-  </ul>
+  <dl> 
+    <dd>python3 sbom.py 'path to directory with software projects'</li>
+  </dl>
   If that for some reason does not work try with 'python' instead of 'python3'
 </p>
