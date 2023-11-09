@@ -1,6 +1,6 @@
 # SBOM-Homework
 <p>
-  This project takes a directory with many software projects and retuns a sbom (Software Bill of Material) for all of them. The input required is the sbom.py file and a path to the directory with the software projects. <br>
+  This project takes a directory with many software projects and retuns a sbom (Software Bill of Material) for all of them. The input required is the sbom.py file and a path to the directory with the software projects. <br><br>
   I have made a very simple test directory that has 2 folders, one with requirement.txt and the other with package.json and package-lock.json. This is done because I need to have something to test my homework with. As a recommendation you should give a path to another directory to test the SBOM properly
 </p>
 <h2>Requirements</h2>
