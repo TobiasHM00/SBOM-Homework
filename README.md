@@ -11,7 +11,7 @@
   If that for some reason does not work try with 'python' instead of 'python3'
 </p>
 <h2>Known issues / bugs</h2>
-<p>I can not find any</p>
+<p>I have not found any</p>
 <h2>Ideas for features</h2>
 <li>Dependency analysis. A analytic tool that helps identify vulnerable or outdated components and provides a recommendation to update the component</li>
 <li>Version history. This would enable you to keep track of component versions and easly monitor updates and changes to software components</li>
