@@ -2,6 +2,7 @@ import csv
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 
 def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
@@ -17,6 +18,8 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
     """
     repo_dir = Path(repo_dir)
     file_path = os.path.join(repo_dir, filename)
+    git = subprocess.check_output(f'cd {repo_dir} && git log --format="%H" -n 1', shell=True, text=True).strip()
+    
     #Check for requirements.txt for Python projects and extracts the info wanted
     if filename == "requirements.txt":
         with open(file_path, "r") as txtfile:
@@ -27,7 +30,8 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
                 "description": "",
                 "type": "pip",
                 "path": os.path.abspath(file_path),
-                "dependencies": list(content)
+                "dependencies": list(content),
+                "git commit": git
             }
     #Check for package.json for JavaScript projects and extracts the info wanted
     elif filename == "package.json":
@@ -42,7 +46,8 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
                 "license": content.get("license", ""),
                 "description": content.get("description", ""),
                 "engines": content.get("engines", {}),
-                "dependencies": content.get("dependencies", {})
+                "dependencies": content.get("dependencies", {}),
+                "git commit": git
             }
     #Check for package-lock.json for JavaScript projects and extracts the info wanted
     elif filename == "package-lock.json":
@@ -53,7 +58,8 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
                 "version": content.get("version", ""),
                 "type": "npm",
                 "path": os.path.abspath(file_path),
-                "lockfileVersion": content.get("lockfileVersion", "")
+                "lockfileVersion": content.get("lockfileVersion", ""),
+                "git commit": git
             }
     #Returns None if none of the valid files were found
     else:
@@ -73,7 +79,7 @@ def save_as_CSV(sbom_data: list, parent_dir: str | Path) -> None:
     parent_dir = Path(parent_dir)
     csv_file = os.path.join(parent_dir, "sbom.csv")
     with open(csv_file, "w", newline="") as csvfile:
-        fieldnames = ["name", "version", "lockfileVersion", "description", "type", "engines", "path", "author", "license", "dependencies"]
+        fieldnames = ["name", "version", "lockfileVersion", "description", "type", "engines", "path", "author", "license", "dependencies", "git commit"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for item in sbom_data:
