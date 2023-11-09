@@ -8,6 +8,4 @@
   If that for some reason does not work try with 'python' instead of 'python3'
 </p>
 <h2>Known issues / bugs</h2>
-<ul>
-  <li></li>
-</ul>
+<h2>Ideas for features</h2>
