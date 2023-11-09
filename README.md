@@ -4,7 +4,6 @@
 <br>
 <h2>How to run the project</h2>
 <p>
-  
   <br>
   <dl>
     <dt>Once the project is cloned, just write this in the terminal: </dt>
