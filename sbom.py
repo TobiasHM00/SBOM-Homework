@@ -5,8 +5,8 @@ from pathlib import Path
 import sys
 
 def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
-    """Finding the correct files to read from and creating dicts for the information
-        If no valid file is found return None
+    """ Finding the correct files to read from and creating dicts for the information.
+        If no valid file is found return None.
 
     Args:
         filename (str | Path): path to the filename of interest
@@ -16,44 +16,44 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
         None | dict: If
     """
     repo_dir = Path(repo_dir)
+    file_path = os.path.join(repo_dir, filename)
     #Check for requirements.txt for Python projects and extracts the info wanted
     if filename == "requirements.txt":
-        with open(os.path.join(repo_dir, filename), "r") as txtfile:
+        with open(file_path, "r") as txtfile:
             content = txtfile.read().split("\n")
             return {
                 "name": str(repo_dir),
                 "version": "",
                 "description": "",
                 "type": "pip",
-                "path": os.path.abspath(os.path.join(repo_dir, filename)),
+                "path": os.path.abspath(file_path),
                 "dependencies": list(content)
             }
     #Check for package.json for JavaScript projects and extracts the info wanted
     elif filename == "package.json":
-        with open(os.path.join(repo_dir, filename), "r") as jsonfile:
-            content = json.load(jsonfile)
+        with open(file_path, "r") as jsonfile:
+            content = dict(json.load(jsonfile))
             return {
-                "name": content["name"],
-                "version": content["version"],
-                "description": content["description"],
+                "name": content.get("name", ""),
+                "version": content.get("version", ""),
                 "type": "npm",
-                "engines": content["engines"],
-                "path": os.path.abspath(os.path.join(repo_dir, filename)),
-                "author": content["author"],
-                "license": content["license"],
-                "dependencies": content["dependencies"]
+                "path": os.path.abspath(file_path),
+                "author": content.get("author", ""),
+                "license": content.get("license", ""),
+                "description": content.get("description", ""),
+                "engines": content.get("engines", {}),
+                "dependencies": content.get("dependencies", {})
             }
     #Check for package-lock.json for JavaScript projects and extracts the info wanted
     elif filename == "package-lock.json":
-        with open(os.path.join(repo_dir, filename), "r") as lockfile:
-            content = json.load(lockfile)
+        with open(file_path, "r") as lockfile:
+            content = dict(json.load(lockfile))
             return {
-                "name": content["name"],
-                "version": content["version"],
-                "lockfileVersion": content["lockfileVersion"],
-                "description": "",
+                "name": content.get("name", ""),
+                "version": content.get("version", ""),
                 "type": "npm",
-                "path": os.path.abspath(os.path.join(repo_dir, filename)),
+                "path": os.path.abspath(file_path),
+                "lockfileVersion": content.get("lockfileVersion", "")
             }
     #Returns None if none of the valid files were found
     else:
@@ -61,7 +61,7 @@ def extract_info(filename: str | Path, repo_dir: str | Path) -> None | dict:
 
 
 def save_as_CSV(sbom_data: list, parent_dir: str | Path) -> None:
-    """Creating and writeing the information from sbom_data to a CSV-file and saves it to the parent_dir
+    """ Creating and writeing the information from sbom_data to a CSV-file and saves it to the parent_dir.
 
     Args:
         sbom_data (list): list of dicts to read from
@@ -82,7 +82,7 @@ def save_as_CSV(sbom_data: list, parent_dir: str | Path) -> None:
 
 
 def save_as_JSON(sbom_data: dict, parent_dir: str | Path) -> None:
-    """Creating and writeing the information from sbom_data to a JSON-file and saves it to the parent_dir
+    """ Creating and writeing the information from sbom_data to a JSON-file and saves it to the parent_dir.
 
     Args:
         sbom_data (list): list of dicts to read from
@@ -138,12 +138,12 @@ def create_sbom(directory: str | Path) -> None:
 
 
 if __name__ == "__main__":
-    #Checks if the correct amount of arguments is provided
+    #Check if the correct amount of arguments is provided
     if len(sys.argv) != 2:
         print("Usage: python3 sbom.py <directory>")
         sys.exit(1)
 
-    #Checks if the passing argument is a directory
+    #Check if the passing argument is a directory
     input_directory = Path(sys.argv[1])
     if not input_directory.is_dir():
         print("Invalid directory specified.")

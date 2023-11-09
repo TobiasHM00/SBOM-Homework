@@ -2,23 +2,22 @@
     {
         "name": "mender-gui",
         "version": "1.0.0",
-        "lockfileVersion": 3,
-        "description": "",
         "type": "npm",
-        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package-lock.json"
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package-lock.json",
+        "lockfileVersion": 3
     },
     {
         "name": "mender-gui",
         "version": "1.0.0",
-        "description": "Graphical user interface for Mender.",
         "type": "npm",
+        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package.json",
+        "author": "Northern.tech AS",
+        "license": "Apache-2.0",
+        "description": "Graphical user interface for Mender.",
         "engines": {
             "node": ">=14",
             "npm": ">=8"
         },
-        "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package.json",
-        "author": "Northern.tech AS",
-        "license": "Apache-2.0",
         "dependencies": {
             "@emotion/react": "11.11.1",
             "@emotion/styled": "11.11.0",
@@ -81,45 +80,7 @@
         "type": "pip",
         "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-req\\requirements.txt",
         "dependencies": [
-            "apache-libcloud==3.3.1",
-            "anytree==2.8.0",
-            "astroid==2.4.0",
-            "cachetools==4.1.0",
-            "certifi==2020.4.5.1",
-            "chardet==3.0.4",
-            "click==7.1.2",
-            "colorama==0.4.3",
-            "distlib==0.3.0",
-            "docutils==0.16",
-            "idna==2.7",
-            "isort==4.3.21",
-            "jake==0.2.24",
-            "johnnydep==1.5",
-            "lazy-object-proxy==1.4.3",
-            "lxml==4.5.0",
-            "mccabe==0.6.1",
-            "oyaml==0.9",
-            "packaging==20.3",
-            "pkginfo==1.5.0.1",
-            "polling==0.3.1",
-            "pyfiglet==0.8.post1",
-            "pylint==2.5.0",
-            "pyparsing==2.4.7",
-            "python-dateutil==2.8.1",
-            "PyYAML==5.3.1",
-            "requests==2.19.1",
-            "six==1.14.0",
-            "structlog==20.1.0",
-            "tabulate==0.8.7",
-            "termcolor==1.1.0",
-            "terminaltables==3.1.0",
-            "tinydb==3.15.2",
-            "toml==0.10.0",
-            "typed-ast==1.4.1",
-            "urllib3==1.23",
-            "wimpy==0.6",
-            "wrapt==1.12.1",
-            "yaspin==0.16.0"
+            "apache-libcloud==3.3.1"
         ]
     }
 ]
