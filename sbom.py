@@ -84,7 +84,7 @@ def save_as_CSV(sbom_data: list, parent_dir: str | Path) -> None:
         writer.writeheader()
         for item in sbom_data:
             writer.writerow(item)
-    print(f"Saved SBOM in CSV format to '{parent_dir}'")
+    print(f"Saved SBOM in CSV format to '{csv_file}'")
 
 
 def save_as_JSON(sbom_data: dict, parent_dir: str | Path) -> None:
@@ -101,7 +101,7 @@ def save_as_JSON(sbom_data: dict, parent_dir: str | Path) -> None:
     json_file = os.path.join(parent_dir, "sbom.json")
     with open(json_file, "w") as jsonfile:
         json.dump(sbom_data, jsonfile, indent=4)
-    print(f"Saved SBOM in JSON format to '{parent_dir}'")
+    print(f"Saved SBOM in JSON format to '{json_file}'")
 
 
 def create_sbom(directory: str | Path) -> None:

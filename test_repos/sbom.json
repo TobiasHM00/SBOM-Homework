@@ -5,7 +5,7 @@
         "type": "npm",
         "path": "C:\\Users\\tobbe\\OneDrive\\Dokumenter\\Egne_prosjekter\\SBOM-Homework\\test_repos\\repo-pack\\package-lock.json",
         "lockfileVersion": 3,
-        "git commit": "dc9b734dd2fe0f6652dce4340536301b3d9678f7"
+        "git commit": "c5c6d45312f4baf275fa7dcbf991337ea80e6ee6"
     },
     {
         "name": "mender-gui",
@@ -73,7 +73,7 @@
             "xterm-addon-web-links": "0.9.0",
             "zxcvbn": "4.4.2"
         },
-        "git commit": "dc9b734dd2fe0f6652dce4340536301b3d9678f7"
+        "git commit": "c5c6d45312f4baf275fa7dcbf991337ea80e6ee6"
     },
     {
         "name": "test_repos\\repo-req",
@@ -84,6 +84,6 @@
         "dependencies": [
             "apache-libcloud==3.3.1"
         ],
-        "git commit": "dc9b734dd2fe0f6652dce4340536301b3d9678f7"
+        "git commit": "c5c6d45312f4baf275fa7dcbf991337ea80e6ee6"
     }
 ]
